@@ -58,32 +58,34 @@ export default function TodayLog({ onToast }) {
         <span className="value">{logs.length} entries · {totalItems} items</span>
       </div>
 
-      {logs.map((log) => {
-        const time = new Date(log.logged_at).toLocaleTimeString('en-US', {
-          hour: 'numeric', minute: '2-digit',
-        });
+      <div className="log-grid">
+        {logs.map((log) => {
+          const time = new Date(log.logged_at).toLocaleTimeString('en-US', {
+            hour: 'numeric', minute: '2-digit',
+          });
 
-        return (
-          <div key={log.id} className="log-entry">
-            <div className="log-entry-reason-icon"
-              style={{ background: getReasonBg(log.reason) }}>
-              {getReasonEmoji(log.reason)}
-            </div>
-            <div className="log-entry-info">
-              <div className="log-entry-item">{log.item_name}</div>
-              <div className="log-entry-meta">
-                <span className={`reason-tag ${log.reason}`}>
-                  {getReasonLabel(log.reason)}
-                </span>
-                <span>{time}</span>
+          return (
+            <div key={log.id} className="log-entry">
+              <div className="log-entry-reason-icon"
+                style={{ background: getReasonBg(log.reason) }}>
+                {getReasonEmoji(log.reason)}
               </div>
+              <div className="log-entry-info">
+                <div className="log-entry-item">{log.item_name}</div>
+                <div className="log-entry-meta">
+                  <span className={`reason-tag ${log.reason}`}>
+                    {getReasonLabel(log.reason)}
+                  </span>
+                  <span>{time}</span>
+                </div>
+              </div>
+              <div className="log-entry-qty">{log.quantity}</div>
+              <button className="log-entry-delete"
+                onClick={() => handleDelete(log.id, log.item_name)}>✕</button>
             </div>
-            <div className="log-entry-qty">{log.quantity}</div>
-            <button className="log-entry-delete"
-              onClick={() => handleDelete(log.id, log.item_name)}>✕</button>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
