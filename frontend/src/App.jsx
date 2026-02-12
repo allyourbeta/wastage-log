@@ -6,10 +6,10 @@ import Reports from './components/Reports.jsx';
 import ManageItems from './components/ManageItems.jsx';
 
 const TABS = [
-  { id: 'tally', label: 'Log', emoji: '📋' },
-  { id: 'today', label: 'Today', emoji: '📝' },
-  { id: 'reports', label: 'Reports', emoji: '📊' },
-  { id: 'manage', label: 'Manage', emoji: '⚙️' },
+  { id: 'tally', label: 'LOG' },
+  { id: 'today', label: 'TODAY' },
+  { id: 'reports', label: 'REPORTS' },
+  { id: 'manage', label: 'MANAGE' },
 ];
 
 export default function App() {
@@ -24,37 +24,36 @@ export default function App() {
 
   return (
     <div className="app-container">
-      {/* Header - full width */}
+      {/* Header — gradient slab */}
       <header className="app-header">
         <div className="header-left">
           <span className="header-cafe-icon">☕</span>
           <div>
-            <h1>Edmonds Cafe</h1>
-            <div className="subtitle">Wastage Log</div>
+            <h1>EDMONDS CAFE</h1>
+            <div className="subtitle">WASTAGE LOG</div>
           </div>
         </div>
         <div className="header-right">
-          <div className="date-display">{formatDateLong(new Date())}</div>
-          {dailyTotal > 0 && (
-            <div className="header-badge">{dailyTotal} logged</div>
-          )}
+          <div className="date-display">
+            {formatDateLong(new Date()).toUpperCase()}
+          </div>
+          <div className="header-badge">
+            {dailyTotal > 0 ? `${dailyTotal} LOGGED` : '0'}
+          </div>
         </div>
       </header>
 
-      {/* Tab navigation - centered within full-width sticky bar */}
-      <div className="tab-nav-wrap">
-        <nav className="tab-nav">
-          {TABS.map((tab) => (
-            <button
-              key={tab.id}
-              className={`tab-btn ${activeTab === tab.id ? 'active' : ''}`}
-              onClick={() => setActiveTab(tab.id)}
-            >
-              <span className="tab-emoji">{tab.emoji}</span>
-              {tab.label}
-            </button>
-          ))}
-        </nav>
+      {/* Tabs — filled segmented control */}
+      <div className="tab-bar">
+        {TABS.map((tab) => (
+          <button
+            key={tab.id}
+            className={`tab-seg ${activeTab === tab.id ? 'active' : ''}`}
+            onClick={() => setActiveTab(tab.id)}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       {/* Tab content */}
