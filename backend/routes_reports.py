@@ -74,11 +74,37 @@ def get_summary_report(start_date: str, end_date: str):
         ORDER BY total_quantity DESC
     """, (start_date, end_date)).fetchall()
 
+    # Day-of-week breakdown: 0=Sun, 1=Mon, ..., 6=Sat
+    by_dow = conn.execute("""
+        SELECT CAST(strftime('%w', wl.logged_at) AS INTEGER) as dow,
+               SUM(wl.quantity) as total_quantity
+        FROM waste_logs wl
+        WHERE date(wl.logged_at) >= date(?)
+          AND date(wl.logged_at) <= date(?)
+        GROUP BY dow
+        ORDER BY dow
+    """, (start_date, end_date)).fetchall()
+
+    # Day-of-week by item (top wasted items per day)
+    by_dow_item = conn.execute("""
+        SELECT CAST(strftime('%w', wl.logged_at) AS INTEGER) as dow,
+               i.name as item_name,
+               SUM(wl.quantity) as total_quantity
+        FROM waste_logs wl
+        JOIN items i ON wl.item_id = i.id
+        WHERE date(wl.logged_at) >= date(?)
+          AND date(wl.logged_at) <= date(?)
+        GROUP BY dow, i.id
+        ORDER BY dow, total_quantity DESC
+    """, (start_date, end_date)).fetchall()
+
     conn.close()
     return {
         "by_item": [dict(r) for r in by_item],
         "by_reason": [dict(r) for r in by_reason],
         "by_vendor": [dict(r) for r in by_vendor],
+        "by_dow": [dict(r) for r in by_dow],
+        "by_dow_item": [dict(r) for r in by_dow_item],
     }
 
 
