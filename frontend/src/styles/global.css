@@ -551,7 +551,7 @@ button {
 .reason-tag.other { background: var(--r-display-bg); color: var(--r-display); }
 
 /* === Today's Log === */
-.log-list { padding: 16px 18px 80px; max-width: 820px; margin: 0 auto; }
+.log-list { padding: 16px 18px 80px; }
 
 .log-grid {
   display: grid;

@@ -34,3 +34,27 @@ npm-debug.log*
 # Database files (if local)
 *.sqlite
 *.db
+
+*.zip
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# SQLite runtime data (auto-created & seeded on startup)
+*.db
+
+# Node / frontend
+node_modules/
+dist/
+
+# Env files
+.env
+.env.*
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
